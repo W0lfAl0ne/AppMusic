@@ -27,7 +27,7 @@ public class Album {
         return singer;
     }
 
-    public void setSinger(String image) {
+    public void setSinger(String singer) {
         this.singer = singer;
     }
 

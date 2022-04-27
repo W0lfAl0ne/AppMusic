@@ -31,6 +31,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.album_item,parent,false);
+
         return new ViewHolder(view);
     }
 
@@ -40,6 +41,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         holder.albumSinger.setText(album.getSinger());
         holder.albumName.setText(album.getName());
         holder.albumImage.setImageResource(R.drawable.suyt_nua_thi_banner);
+
     }
 
     @Override
@@ -59,26 +61,4 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> 
         }
     }
 
-    public void getData() {
-        Album album = new Album();
-        album.setId("1");
-        album.setName("classic");
-        album.setImage("bf");
-        album.setContent("abc");
-        albums.add(album);
-
-        Album album1 = new Album();
-        album1.setId("2");
-        album1.setName("baroque");
-        album1.setImage("bf");
-        album1.setContent("abc");
-        albums.add(album1);
-
-        Album album2 = new Album();
-        album2.setId("2");
-        album2.setName("v-pop");
-        album2.setImage("bf");
-        album2.setContent("abc");
-        albums.add(album2);
-    }
 }

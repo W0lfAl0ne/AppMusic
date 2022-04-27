@@ -12,7 +12,8 @@
         android:id="@+id/linear_cardView_album"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/album_background">
 
         <ImageView
             android:id="@+id/album_image"
@@ -45,7 +46,7 @@
             android:maxWidth="200dp"
             android:maxLines="1"
             android:text="Tăng Phúc"
-            android:textColor="@color/cardview_shadow_start_color"
+            android:textColor="@color/album_singer"
             android:textSize="15sp" />
 
     </LinearLayout>

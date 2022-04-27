@@ -2,15 +2,18 @@ package com.example.appmusic.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.appmusic.Activity.SongListActivity;
 import com.example.appmusic.Model.Banner;
 import com.example.appmusic.R;
 import com.squareup.picasso.Picasso;
@@ -63,6 +66,15 @@ public class BannerAdapter extends PagerAdapter {
         titleBannerSong.setText(arrayListBanner.get(position).getNameSong());
         textViewContent.setText(arrayListBanner.get(position).getContentAds());
 
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Toast.makeText(context,"da click vao banner " + arrayListBanner.get(position).getNameSong(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, SongListActivity.class);
+                intent.putExtra("Banner", arrayListBanner.get(position).getIdAds());
+                context.startActivity(intent);
+            }
+        });
         container.addView(view);
         return view;
     }

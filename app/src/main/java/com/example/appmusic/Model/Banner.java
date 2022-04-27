@@ -3,18 +3,18 @@ package com.example.appmusic.Model;
 
 public class Banner {
 
-    private String idAds;
+    private int idAds;
     private String imageAds;
     private String contentAds;
     private String idSong;
     private String nameSong;
     private String imageSong;
 
-    public String getIdAds() {
+    public int getIdAds() {
         return idAds;
     }
 
-    public void setIdAds(String idAds) {
+    public void setIdAds(int idAds) {
         this.idAds = idAds;
     }
 

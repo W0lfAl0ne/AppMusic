@@ -52,7 +52,7 @@ public class BannerFragment extends Fragment {
 
     private void getData() {
         Banner banner = new Banner();
-        banner.setIdAds("1");
+        banner.setIdAds(1);
         banner.setImageAds("");
         banner.setContentAds("1 phut abc");
         banner.setIdSong("1");
@@ -61,7 +61,7 @@ public class BannerFragment extends Fragment {
         banners.add(banner);
 
         Banner banner2 = new Banner();
-        banner2.setIdAds("2");
+        banner2.setIdAds(2);
         banner2.setImageAds("drawable/suyt_nua_thi_img.png");
         banner2.setContentAds("Suyt nua thi abc");
         banner2.setIdSong("2");
@@ -70,7 +70,7 @@ public class BannerFragment extends Fragment {
         banners.add(banner2);
 
         Banner banner3 = new Banner();
-        banner3.setIdAds("3");
+        banner3.setIdAds(3);
         banner3.setImageAds("");
         banner3.setContentAds("chac vi minh chua tot abc");
         banner3.setIdSong("3");
