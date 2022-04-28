@@ -48,7 +48,7 @@ public class AlbumFragment extends Fragment {
 
     public void getData() {
         Album album = new Album();
-        album.setId("1");
+        album.setId(1);
         album.setName("chỉ là không cùng nhau");
         album.setSinger("Tăng Phúc");
         album.setImage("bf");
@@ -56,15 +56,15 @@ public class AlbumFragment extends Fragment {
         albums.add(album);
 
         Album album1 = new Album();
-        album1.setId("2");
-        album1.setName("Lạng Lùng");
+        album1.setId(2);
+        album1.setName("Lạ Lùng");
         album1.setSinger("Vũ");
         album1.setImage("bf");
         album1.setContent("abc");
         albums.add(album1);
 
         Album album2 = new Album();
-        album2.setId("2");
+        album2.setId(3);
         album2.setName("Sai Người Sai Thời Điểm");
         album2.setSinger("Thanh Hưng");
         album2.setImage("bf");

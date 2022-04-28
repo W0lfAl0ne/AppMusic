@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager2 viewPager;
     MainViewPagerAdapter mainViewPagerAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
