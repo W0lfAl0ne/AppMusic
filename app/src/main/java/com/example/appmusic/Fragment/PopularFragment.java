@@ -1,12 +1,16 @@
 package com.example.appmusic.Fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +20,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.appmusic.API.DonationApi;
 import com.example.appmusic.Activity.SongListActivity;
-import com.example.appmusic.Model.Popular;
+import com.example.appmusic.Model.MusicGenre;
 import com.example.appmusic.R;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PopularFragment extends Fragment {
     View view;
     HorizontalScrollView horizontalScrollView;
     TextView popular_more;
-    ArrayList<Popular> populars = new ArrayList<>();
-
-
+    List<MusicGenre> populars = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,32 +49,12 @@ public class PopularFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_popular, container, false);
         horizontalScrollView = view.findViewById(R.id.horizontal_Scroll_View);
         popular_more = view.findViewById(R.id.popular_more);
-        getData();
+        new GetAllTask().execute("/music-genre/bot");
 
         return view;
     }
 
-    private void getData(){
-        Popular popular = new Popular();
-        popular.setId(1);
-        popular.setName("classic");
-        popular.setImage("bf");
-        popular.setContent("abc");
-        populars.add(popular);
-
-        Popular popular1 = new Popular();
-        popular1.setId(2);
-        popular1.setName("baroque");
-        popular1.setImage("bf");
-        popular1.setContent("abc");
-        populars.add(popular1);
-
-        Popular popular2 = new Popular();
-        popular2.setId(3);
-        popular2.setName("v-pop");
-        popular2.setImage("bf");
-        popular2.setContent("abc");
-        populars.add(popular2);
+    private void getData(List<MusicGenre> populars){
 
         LinearLayout linearLayout = new LinearLayout(getActivity());
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -80,7 +67,8 @@ public class PopularFragment extends Fragment {
 
             ImageView imageView = new ImageView(getActivity());
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setImageResource(R.drawable.suyt_nua_thi_banner);
+            new LoadImageURL(imageView)
+                    .execute(populars.get(i).getSource());
             TextView textView = new TextView(getContext());
             textView.setText(populars.get(i).getName());
             textView.setTextSize(30);
@@ -100,7 +88,8 @@ public class PopularFragment extends Fragment {
                 public void onClick(View view) {
 //                Toast.makeText(context,"da click vao banner " + arrayListBanner.get(position).getNameSong(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(), SongListActivity.class);
-                    intent.putExtra("Popular", populars.get(finalI).getId());
+                    intent.putExtra("ID", populars.get(finalI).getId());
+                    intent.putExtra("Source", populars.get(finalI).getSource());
                     startActivity(intent);
                 }
             });
@@ -109,5 +98,58 @@ public class PopularFragment extends Fragment {
         }
         horizontalScrollView.addView(linearLayout);
 
+    }
+
+    private class GetAllTask extends AsyncTask<String, Void, List<MusicGenre>> {
+        public GetAllTask(){}
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+
+        protected List<MusicGenre> doInBackground(String... params) {
+            try {
+                return (List<MusicGenre>) DonationApi.getAllMusicGenre((String) params[0]);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(List<MusicGenre> result) {
+            super.onPostExecute(result);
+            Log.v("Music","Size in post" + result.size());
+
+            getData(result);
+        }
+    }
+
+    private class LoadImageURL extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public LoadImageURL(ImageView rs) {
+            this.imageView = rs;
+        }
+
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            Bitmap bitmap = null;
+            try {
+                InputStream inputStream = new URL(strings[0]).openStream();
+                bitmap = BitmapFactory.decodeStream(inputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            imageView.setImageBitmap(bitmap);
+        }
     }
 }

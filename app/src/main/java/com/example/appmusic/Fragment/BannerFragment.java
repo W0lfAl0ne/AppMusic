@@ -1,5 +1,9 @@
 package com.example.appmusic.Fragment;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,18 +18,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.appmusic.API.DonationApi;
 import com.example.appmusic.Adapter.BannerAdapter;
 import com.example.appmusic.Model.Banner;
+import com.example.appmusic.Model.Music;
+import com.example.appmusic.Model.MusicGenre;
 import com.example.appmusic.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator;
 
 
 public class BannerFragment extends Fragment {
 
-    ArrayList<Banner> banners = new ArrayList<>();
+    List<MusicGenre> banners = new ArrayList<>();
     BannerAdapter bannerAdapter;
     View view;
     ViewPager viewPager;
@@ -46,51 +54,49 @@ public class BannerFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_banner, container, false);
         viewPager = view.findViewById(R.id.view_pager);
         circleIndicator = view.findViewById(R.id.indicator_banner);
-        getData();
+        new GetAllTask().execute("/music-genre/top");
         return view;
     }
 
-    private void getData() {
-        Banner banner = new Banner();
-        banner.setIdAds(1);
-        banner.setImageAds("");
-        banner.setContentAds("1 phut abc");
-        banner.setIdSong("1");
-        banner.setNameSong("1 Phút");
-        banner.setImageSong("drawable/mot_phut_img.png");
-        banners.add(banner);
-
-        Banner banner2 = new Banner();
-        banner2.setIdAds(2);
-        banner2.setImageAds("drawable/suyt_nua_thi_img.png");
-        banner2.setContentAds("Suyt nua thi abc");
-        banner2.setIdSong("2");
-        banner2.setNameSong("suyt nua thi");
-        banner2.setImageSong("drawable/suyt_nua_thi_banner.png");
-        banners.add(banner2);
-
-        Banner banner3 = new Banner();
-        banner3.setIdAds(3);
-        banner3.setImageAds("");
-        banner3.setContentAds("chac vi minh chua tot abc");
-        banner3.setIdSong("3");
-        banner3.setNameSong("chac vi minh chua tot");
-        banner3.setImageSong("");
-        banners.add(banner3);
-
-        bannerAdapter = new BannerAdapter(getActivity(),banners);
-        viewPager.setAdapter(bannerAdapter);
-        circleIndicator.setViewPager(viewPager);
-        handler = new Handler();
-        runnable = () -> {
-            currentItem = viewPager.getCurrentItem();
-            currentItem++;
-            if (currentItem>= viewPager.getAdapter().getCount()){
-                currentItem = 0;
+    private class GetAllTask extends AsyncTask<String, Void, List<MusicGenre>> {
+        protected ProgressDialog dialog;
+        public GetAllTask(){
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected List<MusicGenre> doInBackground(String... params) {
+            try {
+                return (List<MusicGenre>) DonationApi.getAllMusicGenre((String) params[0]);
             }
-            viewPager.setCurrentItem(currentItem, true);
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(List<MusicGenre> result) {
+            super.onPostExecute(result);
+            banners = result;
+            Log.v("Music","Size in post" + banners);
+            bannerAdapter = new BannerAdapter(getActivity(), banners);
+            viewPager.setAdapter(bannerAdapter);
+            circleIndicator.setViewPager(viewPager);
+            handler = new Handler();
+            runnable = () -> {
+                currentItem = viewPager.getCurrentItem();
+                currentItem++;
+                if (currentItem>= viewPager.getAdapter().getCount()){
+                    currentItem = 0;
+                }
+                viewPager.setCurrentItem(currentItem, true);
+                handler.postDelayed(runnable,4500);
+            };
             handler.postDelayed(runnable,4500);
-        };
-        handler.postDelayed(runnable,4500);
+        }
     }
+
+
 }

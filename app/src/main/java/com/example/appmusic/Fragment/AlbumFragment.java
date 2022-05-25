@@ -1,28 +1,32 @@
 package com.example.appmusic.Fragment;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.appmusic.API.DonationApi;
 import com.example.appmusic.Adapter.AlbumAdapter;
-import com.example.appmusic.Model.Album;
+import com.example.appmusic.Model.Singer;
 import com.example.appmusic.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AlbumFragment extends Fragment {
 
     View view;
     RecyclerView recyclerView;
     TextView albumMore;
-    ArrayList<Album> albums = new ArrayList<>();
+    List<Singer> albums = new ArrayList<>();
     AlbumAdapter albumAdapter;
 
     @Override
@@ -36,40 +40,38 @@ public class AlbumFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_album, container, false);
         recyclerView = view.findViewById(R.id.recyclerView_album);
         albumMore = view.findViewById(R.id.album_more);
-        getData();
+        new GetAllTask().execute("/singer/album", "3");
 
-        albumAdapter = new AlbumAdapter(getActivity(), albums);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(albumAdapter);
         return view;
     }
 
-    public void getData() {
-        Album album = new Album();
-        album.setId(1);
-        album.setName("chỉ là không cùng nhau");
-        album.setSinger("Tăng Phúc");
-        album.setImage("bf");
-        album.setContent("abc");
-        albums.add(album);
-
-        Album album1 = new Album();
-        album1.setId(2);
-        album1.setName("Lạ Lùng");
-        album1.setSinger("Vũ");
-        album1.setImage("bf");
-        album1.setContent("abc");
-        albums.add(album1);
-
-        Album album2 = new Album();
-        album2.setId(3);
-        album2.setName("Sai Người Sai Thời Điểm");
-        album2.setSinger("Thanh Hưng");
-        album2.setImage("bf");
-        album2.setContent("abc");
-        albums.add(album2);
-
+    private class GetAllTask extends AsyncTask<String, Void, List<Singer>> {
+        public GetAllTask(){
+        }
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+        @Override
+        protected List<Singer> doInBackground(String... params) {
+            try {
+                return (List<Singer>) DonationApi.getAllAlbum((String) params[0], (String) params[1]);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(List<Singer> result) {
+            super.onPostExecute(result);
+            Log.v("Music","Size in album create view" + result.size());
+            albums = result;
+            albumAdapter = new AlbumAdapter(getActivity(), albums);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(albumAdapter);
+        }
     }
 }

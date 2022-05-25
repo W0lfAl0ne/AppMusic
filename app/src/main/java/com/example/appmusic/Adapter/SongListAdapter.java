@@ -1,31 +1,35 @@
 package com.example.appmusic.Adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmusic.Activity.PlayMusicActivity;
-import com.example.appmusic.Model.Song;
+import com.example.appmusic.Model.Music;
 import com.example.appmusic.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHolder>{
     private Context context;
-    private ArrayList<Song> songList;
+    private List<Music> songList;
+    private int id;
+    private String type_id;
 
-    public SongListAdapter(Context context, ArrayList<Song> songList) {
+    public SongListAdapter(Context context, List<Music> songList, int id, String type_id) {
         this.context = context;
         this.songList = songList;
+        this.id = id;
+        this.type_id = type_id;
     }
 
     @NonNull
@@ -33,14 +37,14 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.song_list_item, viewGroup, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, i);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
-        Song song = songList.get(i);
-        holder.songSinger.setText(song.getSinger());
-        holder.songName.setText(song.getName());
+        Music music = songList.get(i);
+        holder.songSinger.setText(music.singersToString());
+        holder.songName.setText(music.getName());
         holder.songIndex.setText(i + 1 + "");
     }
 
@@ -52,7 +56,7 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView songIndex, songSinger, songName;
         ImageView songLike, songMyPlaylist;
-        ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView, int i) {
             super(itemView);
             songIndex = itemView.findViewById(R.id.song_index);
             songSinger = itemView.findViewById(R.id.song_singer);
@@ -64,7 +68,6 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     songLike.setImageResource(R.drawable.iconloved);
-
                 }
             });
 
@@ -72,13 +75,22 @@ public class SongListAdapter extends RecyclerView.Adapter<SongListAdapter.ViewHo
                 @Override
                 public void onClick(View view) {
                     songMyPlaylist.setImageResource(R.drawable.iconsdoubletick);
-
                 }
             });
+
             itemView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, PlayMusicActivity.class);
+                    Log.v("Music", songIndex.getText().toString());
+                    intent.putExtra("Music_Source", songList.get(Integer.parseInt(songIndex.getText().toString()) - 1).getSource());
+                    intent.putExtra("Music_ID", id);
+                    intent.putExtra("Type_ID", type_id);
+                    intent.putExtra("Music_Source_Prior", Integer.parseInt(songIndex.getText().toString()) - 1 < 0 ?
+                                            null : songList.get(Integer.parseInt(songIndex.getText().toString()) - 2).getName());
+                    intent.putExtra("Music_Source_After", Integer.parseInt(songIndex.getText().toString()) - 1 > songList.size() ?
+                                            null : songList.get(Integer.parseInt(songIndex.getText().toString())).getName());
                     context.startActivity(intent);
                 }
             });
