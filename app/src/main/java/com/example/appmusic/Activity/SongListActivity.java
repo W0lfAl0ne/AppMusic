@@ -1,5 +1,6 @@
 package com.example.appmusic.Activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,6 +47,8 @@ public class SongListActivity extends Base {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Tên danh sách");
         setContentView(R.layout.activity_song_list);
         collapsingtoolbarLayout = findViewById(R.id.collapsing_toolbar);
         recyclerviewSongList = findViewById(R.id.recyclerView_SongList);

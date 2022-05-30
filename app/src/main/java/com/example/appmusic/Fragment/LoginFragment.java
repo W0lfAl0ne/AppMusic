@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.appmusic.API.DonationApi;
@@ -39,6 +41,14 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
+        return view;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         register = view.findViewById(R.id.registor);
         submit = view.findViewById(R.id.submit);
         username = view.findViewById(R.id.username);
@@ -55,10 +65,11 @@ public class LoginFragment extends Fragment {
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view1) {
+            public void onClick(View view) {
+
                 RegisterFragment nextFrag= new RegisterFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.loginMainLayout, nextFrag)
+                        .replace(R.id.layout_user, nextFrag)
                         .commit();
             }
         });
@@ -70,11 +81,7 @@ public class LoginFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
-        return view;
-
     }
-
 
     private class InsertTask extends AsyncTask<Object, Void, String> {
         protected ProgressDialog dialog;

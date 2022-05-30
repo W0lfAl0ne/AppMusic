@@ -44,8 +44,10 @@ public class RegisterFragment extends Fragment {
         backToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), LoginFragment.class);
-                startActivity(intent);
+                LoginFragment nextFrag= new LoginFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layout_user, nextFrag)
+                        .commit();
             }
         });
 

@@ -1,5 +1,6 @@
 package com.example.appmusic.Activity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
@@ -36,6 +37,7 @@ public class PlayMusicActivity extends Base implements
         MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, View.OnTouchListener {
 
     Toolbar toolbar;
+    ActionBar actionBar;
     TextView txtTime, txtTotalTime;
     SeekBar seekBar;
     ImageButton btnRandom, btnPreview, btnPlay, btnNext, btnRepeat;
@@ -77,6 +79,7 @@ public class PlayMusicActivity extends Base implements
 
         GetDataFromIntent();
         setID();
+        actionBar.setTitle("Tên bài hát");
 //        eventClick();
         Intent intent = getIntent();
         if (intent != null) {
@@ -129,6 +132,8 @@ public class PlayMusicActivity extends Base implements
         mediaPlayer.setOnCompletionListener(this);
     }
 
+
+
     public String convertMillisecondsToMinutes(int miniseconds) {
         int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(miniseconds);
         int seconds = (int) TimeUnit.MILLISECONDS.toSeconds(miniseconds)%60;
@@ -161,6 +166,7 @@ public class PlayMusicActivity extends Base implements
     }
 
     private void setID() {
+        actionBar = getSupportActionBar();
         toolbar = findViewById(R.id.toolbar_play_nhac);
         seekBar = findViewById(R.id.seekbar_song);
         txtTime = findViewById(R.id.txt_time_song);

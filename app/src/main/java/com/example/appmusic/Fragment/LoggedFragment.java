@@ -31,8 +31,9 @@ public class LoggedFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Base.token = null;
-                Intent intent = new Intent(getActivity(), LoginFragment.class);
-                startActivity(intent);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.layout_user, new LoginFragment())
+                        .commit();
             }
         });
 

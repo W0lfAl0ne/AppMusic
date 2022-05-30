@@ -24,6 +24,7 @@ package com.example.appmusic.Activity;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 import com.example.appmusic.Adapter.MainViewPagerAdapter;
@@ -40,6 +41,10 @@ public class MainActivity extends Base {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("App nhạc");
+
+
         setContentView(R.layout.activity_main);
 
         tabLayout  = findViewById(R.id.myTabLayout);
@@ -63,7 +68,7 @@ public class MainActivity extends Base {
                     break;
                 case 2:
                     tab.setIcon(R.drawable.iconuser);
-                    tab.setText("Login");
+                    tab.setText("User");
                     break;
             }
         }).attach();

@@ -42,6 +42,19 @@
         <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_popular.xml" value="0.25" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/fragment_search.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/AppMusic/app/src/main/res/layout/song_list_item.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/activity_logged.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/activity_main.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/activity_play_music.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/content_logged.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/content_main.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/fragment_album.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/fragment_first.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/fragment_home.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/fragment_login.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/fragment_registor.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/fragment_user.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/btl_music-main/app/src/main/res/layout/song_list_item.xml" value="0.22826086956521738" />
       </map>
     </option>
   </component>
