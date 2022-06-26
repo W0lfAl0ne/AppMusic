@@ -12,7 +12,6 @@ import com.example.appmusic.fragments.PlayListFragment;
 
 public class PlayMusicViewPagerAdapter extends FragmentStateAdapter {
 
-
     public MusicDiscFragment musicDiscFragment;
     public PlayListFragment playListFragment;
 

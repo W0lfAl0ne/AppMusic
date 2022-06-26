@@ -4,11 +4,7 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +12,12 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.appmusic.R;
-import com.example.appmusic.notification.CreateNotification;
+import androidx.fragment.app.Fragment;
 
-import java.io.IOException;
+import com.example.appmusic.R;
+import com.example.appmusic.activities.Base;
+import com.example.appmusic.models.AMusic;
+
 import java.io.InputStream;
 import java.net.URL;
 
@@ -27,22 +25,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class PlayBarFragment extends Fragment {
-
     View view;
     CircleImageView circleImageView;
     ObjectAnimator objectAnimator;
     ImageButton btnPreview, btnPlay, btnNext;
     TextView songName;
-    boolean isPlaying = false;
-    long playTime = 0;
-    String img;
+    private AMusic aMusic;
 
+    public PlayBarFragment() {}
 
-
-    public PlayBarFragment() {
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,16 +47,17 @@ public class PlayBarFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         view = inflater.inflate(R.layout.fragment_play_bar, container, false);
-        init();
+        if(Base.getAll().size() > 0) {
+            init();
+        }
+
         return view;
-
-
-
     }
 
     private void init() {
+        Base.getMusic();
+        aMusic = Base.musicStatic;
         circleImageView = view.findViewById(R.id.img_dianhac);
 //        playMusic(img);
         objectAnimator = ObjectAnimator.ofFloat(circleImageView, "rotation", 0f, 360f);
@@ -74,70 +70,19 @@ public class PlayBarFragment extends Fragment {
         btnPlay = view.findViewById((R.id.btn_play));
         btnNext = view.findViewById((R.id.btn_next));
         songName = view.findViewById((R.id.song_name));
-
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isPlaying){
-                    btnPlay.setImageResource(R.drawable.iconplay);
-                    isPlaying = !isPlaying;
-                    stopDisc();
-                    songName.setText("Khong co");
-                } else {
-                    btnPlay.setImageResource(R.drawable.ic_pause_white);
-                    isPlaying = !isPlaying;
-                    startDisc();
-                    songName.setText("Dang chay");
-                }
-            }
-        });
-    }
-
-    public void playMusic(String img) {
-        try {
-            new LoadImageURL(circleImageView).execute(img);
-        } catch (Exception e) {
-            circleImageView.setImageResource(R.drawable.iconfloatingactionbutton);
-        };
-
-    }
-
-    public void stopDisc() {
-        playTime = objectAnimator.getCurrentPlayTime();
-        objectAnimator.cancel();
-    }
-
-    public void startDisc() {
-        objectAnimator.setCurrentPlayTime(playTime);
-        objectAnimator.start();
-
-    }
-
-    private class LoadImageURL extends AsyncTask<String, Void, Bitmap> {
-        CircleImageView imageView;
-
-        public LoadImageURL(CircleImageView rs) {
-            this.imageView = rs;
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            Bitmap bitmap = null;
+        songName.setText(aMusic.getName());
+        Bitmap bitmap = null;
+        if(aMusic.isType()) {
             try {
-                InputStream inputStream = new URL(strings[0]).openStream();
+                InputStream inputStream = new URL(aMusic.getImage()).openStream();
                 bitmap = BitmapFactory.decodeStream(inputStream);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            return bitmap;
+        } else {
+            bitmap = BitmapFactory.decodeResource(getResources(), Integer.parseInt(aMusic.getImage()));
         }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            imageView.setImageBitmap(bitmap);
-        }
+        circleImageView.setImageBitmap(bitmap);
     }
-
 
 }

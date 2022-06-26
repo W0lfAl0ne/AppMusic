@@ -8,10 +8,10 @@
     android:layout_height="match_parent"
     tools:context=".activities.PlayMusicActivity">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar_play_nhac"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"/>-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_play_nhac"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpaper_play_nhac"

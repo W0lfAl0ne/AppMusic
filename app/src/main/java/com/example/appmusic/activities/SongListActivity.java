@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SongListActivity extends Base {
-    ActionBar actionBar;
     private int id;
     private String type_id;
     private CoordinatorLayout coordinatorLayout;
@@ -39,6 +38,7 @@ public class SongListActivity extends Base {
     private String name;
     private SongListAdapter songListAdapter;
     private ImageView collapView;
+    ActionBar actionBar;
 
     @Override
     public void onBackPressed() {
@@ -60,19 +60,16 @@ public class SongListActivity extends Base {
         if (intent != null) {
             if (intent.hasExtra("Source")) {
                 String source = intent.getStringExtra("Source");
-                Log.v("Music", "collap source" + source);
-                // Truy Vấn DB với id
-
-                //source là link ảnh
-                //set source vào collapsingtoolbarLayout
                 new LoadImageURL(collapView).execute(source);
+            }
+
+            if(intent.hasExtra("Name")) {
+                String name = intent.getStringExtra("Name");
+                actionBar.setTitle(name);
+                actionBar.setDisplayHomeAsUpEnabled(true);
             }
         }
         getDataIntent(intent);
-        //sq
-        actionBar.setTitle("Tên Album");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        //end
     }
 
     //sq

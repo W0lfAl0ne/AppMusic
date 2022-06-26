@@ -15,6 +15,12 @@ import android.widget.TextView;
 import com.example.appmusic.R;
 import com.example.appmusic.adapters.PlayListAdapter;
 import com.example.appmusic.models.AMusic;
+import com.example.appmusic.models.Music;
+import com.example.appmusic.models.MusicOnDevice;
+import com.example.appmusic.notification.MyService;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class PlayListFragment extends Fragment {
@@ -25,9 +31,11 @@ public class PlayListFragment extends Fragment {
     public TextView song_name;
     public TextView song_singer;
     public AMusic music;
+    public MyService myService;
 
-    public PlayListFragment(AMusic music) {
+    public PlayListFragment(AMusic music, MyService myService) {
         this.music = music;
+        this.myService = myService;
     }
 
     @Override
@@ -43,8 +51,8 @@ public class PlayListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView_album);
         song_name = view.findViewById(R.id.song_name);
         song_singer = view.findViewById(R.id.song_singer);
-        
-        playListAdapter = new PlayListAdapter(context, music.getPlaylists());
+
+        playListAdapter = new PlayListAdapter(context, new ArrayList<>(music.getPlaylists()));
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(playListAdapter);
 
@@ -54,7 +62,12 @@ public class PlayListFragment extends Fragment {
 
     public void init() {
         song_name.setText("Bài hát: " + music.getName());
-        song_singer.setText("Ca sĩ: ");
-
+        if(music.isType()) {
+            Music music1 = (Music) music;
+            song_singer.setText("Ca sĩ: " + music1.singersToString());
+        } else {
+            MusicOnDevice musicOnDevice = (MusicOnDevice) music;
+            song_singer.setText("Ca sĩ: " + musicOnDevice.getSinger());
+        }
     }
 }

@@ -6,8 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.PlayBarFragment"
     android:orientation="horizontal"
-    android:background="@color/play_bar"
-    >
+    android:background="@color/play_bar">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_dianhac"
@@ -31,7 +30,10 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="15dp"
         android:layout_toStartOf="@+id/control"
-        android:layout_toEndOf="@+id/img_dianhac" />
+        android:layout_toEndOf="@+id/img_dianhac"
+        android:text="Vo tuyet voi nhat"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:id="@+id/control"

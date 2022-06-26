@@ -1,21 +1,19 @@
 package com.example.appmusic.adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmusic.R;
-import com.example.appmusic.activities.PlayMusicActivity;
 import com.example.appmusic.models.AMusic;
 import com.example.appmusic.models.Music;
 import com.example.appmusic.models.MusicOnDevice;
+import com.example.appmusic.notification.MyService;
 
 import java.util.List;
 
@@ -26,9 +24,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.ViewHo
     public PlayListAdapter(Context context, List<AMusic> songList) {
         this.songList = songList;
         this.context = context;
-
     }
-
 
     @NonNull
     @Override
@@ -52,7 +48,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return 0;
+        return songList.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,8 +58,6 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.ViewHo
             songIndex = itemView.findViewById(R.id.song_index);
             songSinger = itemView.findViewById(R.id.song_singer);
             songName = itemView.findViewById(R.id.song_name);
-
-
         }
     }
 }

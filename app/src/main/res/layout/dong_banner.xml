@@ -33,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/img_view_banner"
             android:layout_toRightOf="@id/img_view_banner"
+            android:text="DM cuoc doi"
             android:textColor="#FFFFFF"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -49,6 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:maxLines="2"
+                android:text="DKM ca xa hoi dkm cuoc doi dkmm dkm dkm dkm dkm dkm"
                 android:textColor="#FFFFFF"
                 android:textSize="13sp" />
         </RelativeLayout>
