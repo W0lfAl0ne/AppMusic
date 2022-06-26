@@ -29,12 +29,14 @@ public class MusicDiscFragment extends Fragment {
     CircleImageView circleImageView;
     ObjectAnimator objectAnimator;
     long playTime;
+    boolean musicType;
     String img;
 
 
 
-    public MusicDiscFragment(String img) {
+    public MusicDiscFragment(String img, boolean musicType) {
         this.img = img;
+        this.musicType = musicType;
     }
 
     @Override
@@ -48,7 +50,8 @@ public class MusicDiscFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_music_disc, container, false);
         circleImageView = view.findViewById(R.id.img_dianhac);
-        playMusic(img);
+        playMusic(img, musicType);
+
         objectAnimator = ObjectAnimator.ofFloat(circleImageView, "rotation", 0f, 360f);
         objectAnimator.setDuration(20000);
         objectAnimator.setRepeatCount(ValueAnimator.INFINITE);
@@ -59,12 +62,17 @@ public class MusicDiscFragment extends Fragment {
         return view;
     }
 
-    public void playMusic(String img) {
-        try {
-            new LoadImageURL(circleImageView).execute(img);
-        } catch (Exception e) {
-            circleImageView.setImageResource(R.drawable.iconfloatingactionbutton);
-        };
+    public void playMusic(String img, boolean musicType) {
+        if (musicType) {
+            try {
+                new LoadImageURL(circleImageView).execute(img);
+            } catch (Exception e) {
+                circleImageView.setImageResource(R.drawable.iconfloatingactionbutton);
+            };
+        } else {
+            circleImageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), Integer.parseInt(img)));
+        }
+
 
     }
 

@@ -31,6 +31,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.example.appmusic.adapters.PlayMusicViewPagerAdapter;
 import com.example.appmusic.adapters.SongListAdapter;
 import com.example.appmusic.fragments.MusicDiscFragment;
+import com.example.appmusic.fragments.PlayBarFragment;
 import com.example.appmusic.fragments.PlayListFragment;
 import com.example.appmusic.models.AMusic;
 import com.example.appmusic.models.Music;
@@ -55,8 +56,6 @@ public class PlayMusicActivity extends Base implements
     SeekBar seekBar;
     ImageButton btnRandom, btnPreview, btnPlay, btnNext, btnRepeat;
     ViewPager2 viewPager;
-    MusicDiscFragment fragment_dia_nhac;
-    PlayListFragment fragment_play_danhsach_baihat;
     public static PlayMusicViewPagerAdapter adapternhac;
     int position = 0;
     boolean repeat = false;
@@ -143,6 +142,7 @@ public class PlayMusicActivity extends Base implements
         actionBar.setTitle(music.getName());
         actionBar.setDisplayHomeAsUpEnabled(true);
         //end
+
     }
 
     //sq
@@ -164,6 +164,7 @@ public class PlayMusicActivity extends Base implements
     public void runMusic(String url) {
         mService.getPlayer().pause();
         mService.getPlayer().reset();
+
         if(music.isType()) {
             try {
                 mService.startMedia(url);
@@ -173,6 +174,7 @@ public class PlayMusicActivity extends Base implements
         } else {
             mService.setPlayer(MediaPlayer.create(getApplicationContext(), Integer.parseInt(url)));
             mService.getPlayer().start();
+
         }
         btnPlay.setImageResource(R.drawable.ic_pause_white);
         handlerSeekBar(mService.getPlayer());
@@ -242,15 +244,14 @@ public class PlayMusicActivity extends Base implements
 
         //sq
         adapternhac = new PlayMusicViewPagerAdapter(getSupportFragmentManager(),getLifecycle(),
-                new MusicDiscFragment(music.getImage()),
-                new PlayListFragment());
+                new MusicDiscFragment(music.getImage(), music.isType()),
+                new PlayListFragment(music));
         //end
 
         btnPlay.setImageResource(R.drawable.ic_pause_white);
 
         viewPager.setAdapter(adapternhac);
-/*        fragment_dia_nhac = (MusicDiscFragment) getSupportFragmentManager().findFragmentByTag(position + "");*/
-        Log.v("Music", "check exist fragment " + fragment_dia_nhac);
+
         btnRepeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -270,7 +271,7 @@ public class PlayMusicActivity extends Base implements
                 music = getMusic(musics[music_id]);
                 //sq
                 actionBar.setTitle(music.getName());
-                adapternhac.musicDiscFragment.playMusic(music.getImage());
+                adapternhac.musicDiscFragment.playMusic(music.getImage(), music.isType());
                 adapternhac.musicDiscFragment.startDisc();
 
                 //end
@@ -419,7 +420,7 @@ public class PlayMusicActivity extends Base implements
             music = getMusic(musics[music_id]);
             //sq
             actionBar.setTitle(music.getName());
-            adapternhac.musicDiscFragment.playMusic(music.getImage());
+            adapternhac.musicDiscFragment.playMusic(music.getImage(), music.isType());
             adapternhac.musicDiscFragment.startDisc();
             //end
         }
@@ -490,7 +491,7 @@ public class PlayMusicActivity extends Base implements
 
             //sq
             actionBar.setTitle(music.getName());
-            adapternhac.musicDiscFragment.playMusic(music.getImage());
+            adapternhac.musicDiscFragment.playMusic(music.getImage(), music.isType());
             adapternhac.musicDiscFragment.startDisc();
             // end sq
         }
