@@ -6,12 +6,12 @@
     android:background="@drawable/custom_background_play_nhac"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.PlayMusicActivity">
+    tools:context=".activities.PlayMusicActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_play_nhac"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"/>
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar_play_nhac"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"/>-->
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpaper_play_nhac"
@@ -70,7 +70,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:id="@+id/btn_ngaunhien"/>
+                android:id="@+id/noti_random"/>
             <ImageButton
                 android:src="@drawable/iconpreview"
                 android:scaleType="fitXY"
@@ -96,7 +96,7 @@
                 android:layout_height="50dp"
                 android:id="@+id/btn_next"/>
             <ImageButton
-                android:src="@drawable/iconrepeat"
+                android:src="@drawable/icon_repeat"
                 android:scaleType="fitXY"
                 android:background="@null"
                 android:layout_width="40dp"

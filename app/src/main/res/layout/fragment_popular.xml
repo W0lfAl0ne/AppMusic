@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.PopularFragment">
+    tools:context=".fragments.PopularFragment">
 
     <RelativeLayout
         android:id="@+id/relative_popular"

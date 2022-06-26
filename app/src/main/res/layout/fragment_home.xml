@@ -6,7 +6,7 @@
     android:background="@color/app_background"
     android:scrollbars="none"
     android:fillViewport="true"
-    tools:context=".Fragment.HomeFragment">
+    tools:context=".fragments.HomeFragment">
 
     <LinearLayout
         android:id="@+id/linear_layout"
@@ -17,19 +17,19 @@
 
         <fragment
             android:id="@+id/fragment_banner"
-            android:name="com.example.appmusic.Fragment.BannerFragment"
+            android:name="com.example.appmusic.fragments.BannerFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <fragment
             android:id="@+id/fragment_popular"
-            android:name="com.example.appmusic.Fragment.PopularFragment"
+            android:name="com.example.appmusic.fragments.PopularFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <fragment
             android:id="@+id/fragment_album"
-            android:name="com.example.appmusic.Fragment.AlbumFragment"
+            android:name="com.example.appmusic.fragments.AlbumFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>

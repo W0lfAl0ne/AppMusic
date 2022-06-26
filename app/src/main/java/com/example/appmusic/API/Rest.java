@@ -1,4 +1,4 @@
-package com.example.appmusic.API;
+package com.example.appmusic.api;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -130,4 +130,36 @@ public class Rest {
 
         return data;
 	}
+
+	public static String put(String url, String json) {
+		OutputStreamWriter writer = null;
+		String data = null;
+
+		try {
+			setup(url);
+			httpCon.setRequestMethod("PUT");
+			httpCon.setDoOutput(true);
+			httpCon.setDoInput(true);
+			httpCon.connect();
+
+			Log.v("Music", "POST REQUEST is : " + httpCon.getRequestMethod() + " " + httpCon.getURL());
+
+			// đọc dữ liệu json vào trong body của put request
+			writer = new OutputStreamWriter(httpCon.getOutputStream());
+			writer.write(json);
+			writer.close();
+
+			int HttpResult = httpCon.getResponseCode();
+			if(HttpResult == HttpURLConnection.HTTP_OK) {
+				data = readDataFromServer(httpCon.getInputStream());
+			}
+		}
+
+		catch (Exception e) {
+			Log.v("Music","POST REQUEST ERROR" + e.getMessage());
+		}
+
+		return data;
+	}
+
 }
